@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js" integrity="sha384-IQsoLXl5PILFhosVNubq5LC7Qb9DXgDA9i+tQ8Zj3iwWAwPtgFTxbJ8NT4GN1R8p" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.min.js" integrity="sha384-cVKIPhGWiC2Al4u+LWgxfKTRIcfu0JTxR+EQDz/bgldoEyl4H0zUF0QKbrJ0EcQF" crossorigin="anonymous"></script>
+     <script>
+       
+        function Weather(cityname){
+    fetch(`https://api.openweathermap.org/data/2.5/weather?q=${cityname}&appid=e08bd0e59a81587bce30472e343611cb&units=metric`)
+        .then(function(response){
+            return response.json();
+        })
+        .then(function(data){
+            document.getElementById("city").innerHTML = data.name;
+            document.getElementById("temp").innerHTML = data.main.temp + "°C";
+            document.getElementById("humidity").innerHTML = data.main.humidity + "%";
+            document.getElementById("windspeed").innerHTML = data.wind.speed + " km/h";
+            var image= document.getElementById("weather-image");
+            if(data.weather[0].main=="Clouds"){
+                image.src="./images/clouds.png";
+            }
+            else if(data.weather[0].main=="Clear"){
+                image.src="./images/clear.png";
+            }
+            else if(data.weather[0].main=="Rain"){
+                image.src="./images/rain.png";
+            }
+            else if(data.weather[0].main=="Drizzle"){
+                image.src="./images/drizzle.png";
+            }
+            else if(data.weather[0].main=="Mist"){
+                image.src="./images/mist.png";
+            }
+        })
+        .catch(function(error) {
+            console.log("Error fetching data:", error);
+        });
+}
+
+
+
+        function submitclick(){
+            var cityname=document.querySelector("#searchbox input").value;
+            Weather(cityname);
+        }
+    </script>
+    <style>
+        @media screen and (max-width: 576px) {
+            .searches {
+                width: 90%;
+                /* Adjust other necessary styles for smaller screens */
+            }
+            @media screen and (max-width: 768px) {
+            .searches {
+                width: 45px;
+                height: 75%;
+                /* Adjust other necessary styles for smaller screens */
+            }
+            /* Adjust styles for smaller screens */
+        }
+    }
+
+        body {
+            background-image: url("https://images.unsplash.com/photo-1614850523060-8da1d56ae167?q=80&w=1000&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8bGlnaHQlMjBjb2xvdXJ8ZW58MHx8MHx8fDA%3D");
+            background-size: cover;
+            font-family: Arial, sans-serif;
+            color: #fff;
+            margin: 0;
+            padding: 0;
+        }
+        .searches {
+            width: 40%;
+            justify-content: center;
+            margin-left: 30%;
+            border-radius: 20px;
+            border-color: #00feba;
+            background: linear-gradient(135deg, #00feba, #5b548a);
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3);
+        }
+        
+        .searchboxes {
+            text-align: center;
+            width: 50%;
+            margin: 0 auto;
+            border-radius: 20px;
+            padding: 10px;
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+        .searchboxes:hover{
+            background-color:transparent;
+        }
+        
+        .searchboxes input[type="text"] {
+            border: none;
+            outline: none;
+            border-radius: 50%;
+            text-align: center;
+            color: #fff;
+            width: 60%;
+            padding: 8px;
+            border-radius: 10px;
+            margin-left: 20%;
+            margin-bottom: 10px;
+        } 
+        
+  
+        .searchboxes .btn {
+            border-radius: 10px;
+            
+        }
+        .card-body {
+            text-align: center;
+            
+        }
+        .temp {
+            font-size: 3em;
+            
+        }
+        .city {
+            font-size: 1.5em;
+        }
+        .row .col-6 {
+            padding: 10px;
+        }
+        h4{
+        color: white;
+        font-family: Verdana, Geneva, Tahoma, sans-serif;
+        font-weight: 400;
+        }
+        .card-title{
+            color:gold;
+            font-weight: 500;
+            font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <div class="card text-center searches">
+        <div class="card-header">
+            <h4 class="card-title">WEATHER</h4>
+                 </div>
+                 
+        <div class="card-title searchboxes mt-2" id="searchbox">
+            <input type="text" class="form-control text-dark fw-bolder" placeholder="Enter City Name" id="cityinput">
+        
+            <button type="submit" class="btn btn-danger btn-sm ml-3 button" onclick="submitclick()">Search</button>
+        </div>
+        <div class="card-body">
+            <img src="./images/rain.png" alt="Rain icon" id="weather-image">
+            <h1 class="temp" id="temp">22°C</h1>
+            <h2 class="city" id="city">New York</h2>
+        </div>
+        <div class="card-footer">
+            <div class="row">
+                <div class="col-6">
+                    <img src="./images/humidity.png" alt="Humidity icon">
+                    <h4 id="humidity">50%</h4>
+                    <h4>Humidity</h4>
+                </div>
+                <div class="col-6">
+                    <img src="./images/wind.png" alt="Wind icon">
+                    <h4 id="windspeed">15 km/h</h4>
+                    <h4>Wind Speed</h4>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>
