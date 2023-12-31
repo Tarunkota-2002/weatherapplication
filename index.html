@@ -21,19 +21,19 @@
             document.getElementById("windspeed").innerHTML = data.wind.speed + " km/h";
             var image= document.getElementById("weather-image");
             if(data.weather[0].main=="Clouds"){
-                image.src="./images/clouds.png";
+                image.src="clouds.PNG";
             }
             else if(data.weather[0].main=="Clear"){
-                image.src="clear.png";
+                image.src="clear.PNG";
             }
             else if(data.weather[0].main=="Rain"){
-                image.src="rain.png";
+                image.src="rain.PNG";
             }
             else if(data.weather[0].main=="Drizzle"){
-                image.src="drizzle.png";
+                image.src="drizzle.PNG";
             }
             else if(data.weather[0].main=="Mist"){
-                image.src="mist.png";
+                image.src="mist.PNG";
             }
         })
         .catch(function(error) {
